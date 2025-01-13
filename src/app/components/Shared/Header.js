@@ -85,11 +85,16 @@ const Header = () => {
                         <RiArrowDropDownLine className='text-2xl' />
                         <ul id='dropdownMenu' className={`dropdownMenu absolute top-[24px]  left-0 bg-orange-600 w-64 text-left px-8 py-5
                             `}>
-                            <Link className={`link ${pathname === '/msOfficeCourse' ? 'active' : ''}`} href={"/msOfficeCourse"}>MS Office Course</Link>
-                            <Link className={`link ${pathname === '/msExcelCourse' ? 'active' : ''}`} href={"/msExcelCourse"}>MS Excel Course</Link>
-                            <Link className={`link ${pathname === '/powerQuery' ? 'active' : ''}`} href={"/powerQuery"}>Power BI and Query</Link>
-                            <Link className={`link ${pathname === '/corporateExcel' ? 'active' : ''}`} href={"/corporateExcel"}>Corporate Excel Training</Link>
-                            <Link className={`link ${pathname === '/exclusiveSoloCourse' ? 'active' : ''}`} href={"/exclusiveSoloCourse"}>Exclusive Solo Course</Link>
+
+                            <Link className={`link ${pathname === '/liveCourses/msOfficeCourses' ? 'active' : ''}`} href={"/liveCourses/msOfficeCourses"}>MS Office Course</Link>
+
+                            <Link className={`link ${pathname === '/liveCourses/msExcelCourse' ? 'active' : ''}`} href={"/liveCourses/msExcelCourse"}>MS Excel Course</Link>
+
+                            <Link className={`link ${pathname === '/liveCourses/powerQuery' ? 'active' : ''}`} href={"/liveCourses/powerQuery"}>Power BI and Query</Link>
+
+                            <Link className={`link ${pathname === '/liveCourses/corporateExcel' ? 'active' : ''}`} href={"/liveCourses/corporateExcel"}>Corporate Excel Training</Link>
+
+                            <Link className={`link ${pathname === '/liveCourses/exclusiveSoloCourse' ? 'active' : ''}`} href={"/liveCourses/exclusiveSoloCourse"}>Exclusive Solo Course</Link>
                         </ul>
                     </li>
 
@@ -113,11 +118,11 @@ const Header = () => {
                         <RiArrowDropDownLine className='text-2xl' />
 
                         <ul className={`dropdownMenu absolute top-[24px]  left-0 bg-orange-600 w-64 text-left px-8 py-5 `}>
-                            <Link className={`link ${pathname === '/msOfficeCourse' ? 'active' : ''}`} href={"/msOfficeCourse"}>MS Office Course</Link>
-                            <Link className={`link ${pathname === '/msExcelCourse' ? 'active' : ''}`} href={"/msExcelCourse"}>MS Excel Course</Link>
-                            <Link className={`link ${pathname === '/excelAdvance' ? 'active' : ''}`} href={"/excelAdvance"}>Excel for Adv. Users</Link>
-                            <Link className={`link ${pathname === '/powerPoint' ? 'active' : ''}`} href={"/powerPoint"}>PowerPoint Course</Link>
-                            <Link className={`link ${pathname === '/msWord' ? 'active' : ''}`} href={"/msWord"}>MS Word Course</Link>
+                            <Link className={`link ${pathname === '/recordedCourses/msOfficeCourse' ? 'active' : ''}`} href={"/recordedCourses/msOfficeCourse"}>MS Office Course</Link>
+                            <Link className={`link ${pathname === '/recordedCourses/msExcelCourse' ? 'active' : ''}`} href={"/recordedCourses/msExcelCourse"}>MS Excel Course</Link>
+                            <Link className={`link ${pathname === '/recordedCourses/excelAdvance' ? 'active' : ''}`} href={"/recordedCourses/excelAdvance"}>Excel for Adv. Users</Link>
+                            <Link className={`link ${pathname === '/recordedCourses/powerPoint' ? 'active' : ''}`} href={"/recordedCourses/powerPoint"}>PowerPoint Course</Link>
+                            <Link className={`link ${pathname === '/recordedCourses/msWord' ? 'active' : ''}`} href={"/recordedCourses/msWord"}>MS Word Course</Link>
                         </ul>
                     </li>
                     <li className="">
