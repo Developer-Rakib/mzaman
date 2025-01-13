@@ -5,7 +5,7 @@ import '../Shared/Style/Style.css'
 import { TiShoppingCart } from "react-icons/ti";
 // import { NavLink, useNavigate } from 'react-router-dom';
 import { usePathname } from 'next/navigation'
-
+import { RiArrowDropDownLine } from "react-icons/ri";
 import { CiMenuBurger } from "react-icons/ci";
 import { MdDashboardCustomize, MdOutlineClose } from 'react-icons/md';
 import { useState } from 'react';
@@ -19,6 +19,8 @@ import HeaderSocial from './SocialHeader';
 
 const Header = () => {
     let [toggle, setToggle] = useState(false);
+    let [liveDropdownToggle, setLiveDropdownToggle] = useState(false);
+    let [recordedDropdownToggle, setRecordedDropdownToggle] = useState(false);
     // const [user, loading] = useAuthState(auth);
     // let [role, roleLoading] = useRole(user)
     const pathname = usePathname()
@@ -28,6 +30,10 @@ const Header = () => {
     const navBtnHndle = () => {
         setToggle(!toggle)
     }
+    // const handleDropdown = () => {
+    //     const dropdown = document.getElementById('dropdownMenu');
+    //     dropdown.style.display = 'none';
+    // }
 
     const handleLogout = () => {
         signOut(auth)
@@ -41,12 +47,12 @@ const Header = () => {
     // if (loading) {
     //     return <Loader></Loader>
     // }
-    // console.log(pathname);
+    // console.log(recordedDropdownToggle);
     return (
         <div className='header-container  fixed top-0 w-full'>
             <HeaderSocial></HeaderSocial>
             <nav
-                className='flex bg-orange-500 text-white py-4  items-start  md:justify-between md:px-16 px-5 md:items-center'
+                className='flex bg-orange-500 text-white py-3  items-start  md:justify-between md:px-16 px-5 md:items-center'
             >
                 {/* {
                     user &&
@@ -66,13 +72,53 @@ const Header = () => {
                         <Link className={`link ${pathname === '/' ? 'active' : ''}`} href={"/"}>Home</Link>
                     </li>
 
-                    <li className="">
-                        <Link className={`link ${pathname === '/liveCourse' ? 'active' : ''}`} href={"/liveCourse"}>Live Course</Link>
+                    {/* live courses */}
+
+                    <li className="dropdownMenuParent cursor-pointer relative flex items-center">
+                        <Link
+                            // onClick={() => {
+                            //     setLiveDropdownToggle(!liveDropdownToggle)
+                            //     setRecordedDropdownToggle(false)
+                            // }}
+                            className={`link ${pathname === '/liveCourses' ? 'active' : ''}`} href={"/"}>Live Courses</Link>
+                        {/* ${!liveDropdownToggle && 'hidden'} */}
+                        <RiArrowDropDownLine className='text-2xl' />
+                        <ul id='dropdownMenu' className={`dropdownMenu absolute top-[24px]  left-0 bg-orange-600 w-64 text-left px-8 py-5
+                            `}>
+                            <Link className={`link ${pathname === '/msOfficeCourse' ? 'active' : ''}`} href={"/msOfficeCourse"}>MS Office Course</Link>
+                            <Link className={`link ${pathname === '/msExcelCourse' ? 'active' : ''}`} href={"/msExcelCourse"}>MS Excel Course</Link>
+                            <Link className={`link ${pathname === '/powerQuery' ? 'active' : ''}`} href={"/powerQuery"}>Power BI and Query</Link>
+                            <Link className={`link ${pathname === '/corporateExcel' ? 'active' : ''}`} href={"/corporateExcel"}>Corporate Excel Training</Link>
+                            <Link className={`link ${pathname === '/exclusiveSoloCourse' ? 'active' : ''}`} href={"/exclusiveSoloCourse"}>Exclusive Solo Course</Link>
+                        </ul>
                     </li>
 
+                    {/* MS Office Course
+                    MS Excel Course
+                    Excel for Adv. Users
+                    PowerPoint Course
+                    MS Word Course */}
 
-                    <li className="">
-                        <Link className={`link ${pathname === '/recordedCours' ? 'active' : ''}`} href={"/recordedCours"}>Recorded Course</Link>
+                    {/* Recorded Course */}
+
+                    <li className="relative cursor-pointer flex items-center dropdownMenuParent">
+                        <Link
+                            // onClick={() => {
+                            //     setRecordedDropdownToggle(!recordedDropdownToggle)
+                            //     setLiveDropdownToggle(false)
+                            // }}
+                            className={` link ${pathname === '/recordedCourses' ? 'active' : ''}`} href={"/"}>Recorded Course</Link>
+
+                        {/* ${!recordedDropdownToggle && 'hidden'} */}
+                        <RiArrowDropDownLine className='text-2xl' />
+
+                        <ul className={`dropdownMenu absolute top-[24px]  left-0 bg-orange-600 w-64 text-left px-8 py-5 `}>
+                            <Link className={`link ${pathname === '/msOfficeCourse' ? 'active' : ''}`} href={"/msOfficeCourse"}>MS Office Course</Link>
+                            <Link className={`link ${pathname === '/msExcelCourse' ? 'active' : ''}`} href={"/msExcelCourse"}>MS Excel Course</Link>
+                            <Link className={`link ${pathname === '/excelAdvance' ? 'active' : ''}`} href={"/excelAdvance"}>Excel for Adv. Users</Link>
+                            <Link className={`link ${pathname === '/powerPoint' ? 'active' : ''}`} href={"/powerPoint"}>PowerPoint Course</Link>
+                            <Link className={`link ${pathname === '/msWord' ? 'active' : ''}`} href={"/msWord"}>MS Word Course</Link>
+                        </ul>
                     </li>
                     <li className="">
                         <Link className={`link ${pathname === '/digitalProduct' ? 'active' : ''}`} href={"/digitalProduct"}>Digital Product</Link>
