@@ -8,8 +8,9 @@ import { usePathname } from 'next/navigation'
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { CiMenuBurger } from "react-icons/ci";
 import { MdDashboardCustomize, MdOutlineClose } from 'react-icons/md';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import HeaderSocial from './SocialHeader';
+import axios from "axios";
 // import { signOut } from 'firebase/auth';
 // import toast from 'react-hot-toast';
 // import { useAuthState } from 'react-firebase-hooks/auth';
@@ -19,14 +20,32 @@ import HeaderSocial from './SocialHeader';
 
 const Header = () => {
     let [toggle, setToggle] = useState(false);
-    let [liveDropdownToggle, setLiveDropdownToggle] = useState(false);
-    let [recordedDropdownToggle, setRecordedDropdownToggle] = useState(false);
+    const [liveCourse, setLiveCourse] = useState(null);
+
+    // let [liveDropdownToggle, setLiveDropdownToggle] = useState(false);
+    // let [recordedDropdownToggle, setRecordedDropdownToggle] = useState(false);
+
+    // Make the GET request
+
+    useEffect(() => {
+        axios
+            .get("https://server.mzamanbd.com/liveCourse") // Replace with your API URL
+            .then((response) => {
+                setLiveCourse(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
+    console.log(liveCourse);
+
+
+
+    // console.log(liveCourse)
     // const [user, loading] = useAuthState(auth);
     // let [role, roleLoading] = useRole(user)
     const pathname = usePathname()
     // let navigat = useNavigate();
-
-
 
     // console.log(user);
     const navBtnHndle = () => {
@@ -50,6 +69,7 @@ const Header = () => {
     //     return <Loader></Loader>
     // }
     // console.log(recordedDropdownToggle);
+    if (!liveCourse) return <p>Loading...</p>;
     return (
         <div className='header-container  fixed top-0 w-full'>
             <HeaderSocial></HeaderSocial>
