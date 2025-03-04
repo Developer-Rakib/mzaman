@@ -26,6 +26,8 @@ const Header = () => {
     const pathname = usePathname()
     // let navigat = useNavigate();
 
+
+
     // console.log(user);
     const navBtnHndle = () => {
         setToggle(!toggle)
