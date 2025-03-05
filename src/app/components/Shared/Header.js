@@ -37,7 +37,7 @@ const Header = () => {
                 console.error("Error fetching data:", error);
             });
     }, []);
-    console.log(liveCourse);
+    // console.log(liveCourse);
 
 
 
