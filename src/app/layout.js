@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Shared/Header";
+import Header from "./components/Shared/menus/Header";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
       >
 
         <Header></Header>
+        <Toaster></Toaster>
         <div className="w-[85%] mx-auto ">
           {children}
         </div>

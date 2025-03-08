@@ -1,8 +1,11 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { useForm } from 'react-hook-form';
 import { Editor, EditorState, RichUtils, convertToRaw, Modifier } from "draft-js";
 import { stateToHTML } from "draft-js-export-html"; // Convert Draft.js content to HTML
 import "draft-js/dist/Draft.css";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 // Custom font size styles
 const styleMap = {
@@ -10,7 +13,8 @@ const styleMap = {
     MEDIUM: { fontSize: "16px" },
     LARGE: { fontSize: "20px" },
 };
-export default function Page() {
+
+export default function AdminPage() {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const editorRef = useRef(null);
 
@@ -78,76 +82,231 @@ export default function Page() {
         }
     }, []); // Focus the editor when the component mounts
 
+
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
+    const imgStorage_key = `337d76e7a5799a6aeebe82688b06e092`
+
+    const onSubmit = async data => {
+        if (getHTML() === '<p><br></p>') {
+            Swal.fire({
+                icon: "error",
+                title: "Warning!",
+                text: "Please write description!",
+            });
+            return;
+        }
+
+        const img = data.img[0];
+        const formData = new FormData();
+        formData.append('image', img);
+        console.log(formData);
+        // const url = `https://api.imgbb.com/1/upload?key=${imgStorage_key}`;
+        // fetch(url, {
+        //     method: 'POST',
+        //     body: formData
+        // })
+        //     .then(res => res.json())
+        //     .then(result => {
+        //         if (result.success) {
+        //             const imgUrl = result.data.url;
+        //             const part = {
+        //                 name: data.name,
+        //                 price: data.price,
+        //                 description: data.description,
+        //                 minimumOrderQuanity: data.minimunOrderQuantity,
+        //                 availableQuanity: data.availableQuantity,
+        //                 img: imgUrl
+        //             }
+        //             console.log(part);
+        //             axios.post(`https://computer-village.onrender.com/part`, part)
+        //                 .then(data => {
+        //                     // console.log(data.data.success);
+        //                     // console.log(data.data);
+        //                     if (data.data.success) {
+        //                         toast.success(`${data.data.message}`)
+        //                         reset()
+        //                     }
+        //                     else {
+        //                         toast.success(`${data.data.message}`)
+
+        //                     }
+
+        //                 })
+
+        //         }
+        //     })
+
+    }
+
     console.log(getHTML());
     return (
-        <div className="border p-4 mt-52 rounded-lg max-w-2xl mx-auto">
-            <h2 className="text-lg font-semibold mb-2">Draft.js Rich Text Editor</h2>
+        <div className="mt-36 shadow-lg p-8 border rounded-lg w-11/12 sm:w-7/12 mx-auto">
+            <div className="border p-4 rounded-lg mx-aut ">
+                <h2 className="text-lg font-semibold mb-2 text-orange-500">Description Editor</h2>
 
-            {/* Formatting Buttons */}
-            <div className="mb-2 space-x-2">
-                <button onClick={() => handleStyleChange("BOLD")} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
-                    Bold
-                </button>
-                <button onClick={() => handleStyleChange("ITALIC")} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
-                    Italic
-                </button>
-                <button onClick={() => handleBlockChange("unordered-list-item")} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
-                    Bullet List
-                </button>
-                <button onClick={() => handleBlockChange("ordered-list-item")} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
-                    Numbered List
-                </button>
-                <button onClick={addLink} className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
-                    Add Link
-                </button>
+                {/* Formatting Buttons */}
+                <div className="mb-2 space-x-2">
+                    <button onClick={() => handleStyleChange("BOLD")} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                        <strong>Bold</strong>
+                    </button>
+                    <button onClick={() => handleStyleChange("ITALIC")} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                        <em>Italic</em>
+                    </button>
+                    <button onClick={() => handleBlockChange("unordered-list-item")} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                        <ul>
+                            Bullet List
+
+                        </ul>
+                    </button>
+                    <button onClick={() => handleBlockChange("ordered-list-item")} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                        Numbered List
+                    </button>
+                    <button onClick={addLink} className="px-3 py-1 bg-violet-600 text-white rounded hover:bg-violet-800">
+                        Link
+                    </button>
+                </div>
+
+                {/* Font Size Buttons */}
+                <div className="mb-2 space-x-2">
+                    <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300" onClick={() => toggleFontSize("SMALL")}>Small</button>
+                    <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300" onClick={() => toggleFontSize("MEDIUM")}>Medium</button>
+                    <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300" onClick={() => toggleFontSize("LARGE")}>Large</button>
+                </div>
+
+                {/* Editor Container */}
+                <div className="border p-3 min-h-[150px] cursor-text rounded" onClick={() => editorRef.current?.focus()}>
+                    <Editor ref={editorRef} editorState={editorState} onChange={setEditorState} customStyleMap={styleMap} />
+                </div>
+
+                {/* Button to Get HTML Output */}
+                {/* <button onClick={() => alert(getHTML())} className="mt-4 bg-green-500 text-white px-4 py-2 rounded">
+                        Get HTML Output
+                    </button> */}
+
+
+
             </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ">
 
-            {/* Font Size Buttons */}
-            <div className="mb-2 space-x-2">
-                <button onClick={() => toggleFontSize("SMALL")}>Small</button>
-                <button onClick={() => toggleFontSize("MEDIUM")}>Medium</button>
-                <button onClick={() => toggleFontSize("LARGE")}>Large</button>
-            </div>
-
-            {/* Editor Container */}
-            <div className="border p-3 min-h-[150px] cursor-text rounded" onClick={() => editorRef.current?.focus()}>
-                <Editor ref={editorRef} editorState={editorState} onChange={setEditorState} customStyleMap={styleMap} />
-            </div>
-
-            {/* Button to Get HTML Output */}
-            <button onClick={() => alert(getHTML())} className="mt-4 bg-green-500 text-white px-4 py-2 rounded">
-                Get HTML Output
-            </button>
+                <div className="my-3">
+                    <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Course Name' {...register("courseName", {
+                        required: {
+                            value: true,
+                            message: 'Course Name is Required'
+                        }
+                    })} />
+                    <label className="label">
+                        {errors.courseName?.type === 'required' && <span className="label-text-alt text-red-500">{errors.courseName.message}</span>}
+                    </label>
+                </div>
 
 
-            <h3>Generated HTML:</h3>
-            <div dangerouslySetInnerHTML={{ __html: getHTML() }} />
+                <div className="flex mb-6 items-center text-gray-500">
+                    <label className="label mr-2 ">
+                        <span className="label-text">Select Banner</span>
 
-            {/* <p><span style="font-size: 20px"><strong>Ultimate MS Office Journey: Excel থেকে Power BI পর্যন্ত MS Office-এর পূর্ণাঙ্গ জার্নি!</strong></span></p>
-            <p>আপনি &nbsp;কি মাইক্রোসফট অফিসের এক্সেল, ওয়ার্ড, এবং পাওয়ার পয়েন্টের বেসিক থেকে &nbsp;অ্যাডভান্স স্কিল অর্জন করতে চান? অথবা ডেটা অ্যানালাইসিস এবং &nbsp;ভিজ্যুয়ালাইজেশনের অসাধারণ দুনিয়ায় Power BI-এর মতো টুল দিয়ে নিজের &nbsp;ক্যারিয়ারকে নতুন উচ্চতায় নিয়ে যেতে চান? তাহলে এই কোর্স আপনার জন্য একদম &nbsp;পারফেক্ট!</p>
-            <p>আপনি চাইলে শুধুমাত্র <strong>MS Excel লাইভ কোর্সেও</strong> অংশ নিতে পারবেন। বিস্তারিত জানতে পুরো লেখা পড়ুন।</p>
-            <p><strong>✅ ৫৯ তম ব্যাচের ক্লাস শুরু হবে ০৬ মার্চ ২০২৫ইং থেকে।</strong></p>
-            <p><strong>✅ ক্লাস সময়সূচী</strong></p>
-            <ul>
-                <li><strong>রাত ১০:১৫ থেকে ১১:০০ মিনিট পর্যন্ত। (বি:দ্র: </strong>রমজান &nbsp;মাস শেষ হওয়ার পর, অর্থাৎ ঈদের পরে, ক্লাসের সময়সূচি পরিবর্তিত হবে। &nbsp;নতুন সময়সূচি হবে রাত ৯:৩০ থেকে ১১:০০ পর্যন্ত অনুষ্ঠিত হবে।)</li>
-                <li><strong>এক্সেলের ক্লাস হবে প্রতি বুধবার এবং বৃহস্পতিবার। </strong>যদি আপনি <strong>Power BI and Query</strong> এ ও ভর্তি হতে চান তাহলে প্রথমে এক্সেলের ক্লাস হবে, এক্সেলের সমস্ত ক্লাস শেষ হলে <strong>Power Query এবং Power BI</strong> এর ক্লাস শুরু হবে। <strong>Power Query এবং Power BI</strong> এর ক্লাস হবে <strong>শুক্রবার, সোমবার এবং বুধবার</strong>।</li>
-                <li>পাওয়ারপয়েন্ট এবং ওয়ার্ডের <strong>Only Recorded Videos</strong> দেওয়া হবে। কোন লাইভ ক্লাস হবেনা।</li>
-            </ul>
-            <p>✅ <strong>ক্লাস সংখ্যা</strong></p>
-            <ul>
-                <li><strong>MS Excel</strong> – সর্বনিম্ন ১৬টি থেকে সর্বোচ্চ ২৪টি ক্লাস হবে।</li>
-                <li><strong>Power Query and BI</strong> - মিনিমাম ১২টি ক্লাস হবে।</li>
-                <li><strong>MS PowerPoint</strong> - মিনিমাম ১০টি লাইভ ক্লাসের রেকর্ডেড ভিডিও।</li>
-                <li><strong>MS Word</strong> - মিনিমাম ১০টি লাইভ ক্লাসের রেকর্ডেড ভিডিও।</li>
-            </ul>
-            <h3><strong>📘 কোর্সের মডিউল</strong></h3>
-            <p>বিস্তারিত মডিউল দেখতে ক্লিক করুন:</p>
-            <ul>
-                <li>MS Excel – <a href="facebool.com" target="_blank"><u>এখানে ক্লিক করুন</u></a></li>
-                <li>MS PowerPoint – <a href="https://drive.google.com/file/d/1uEzfo4YYyKRNFbxLORECz9VfI-b5aaog/view?usp=sharing" target="_blank"><u>এখানে ক্লিক করুন</u></a></li>
-                <li>MS Word – <a href="https://drive.google.com/file/d/12Kz-ksD3fmGLQN5Pl7pRd_cyXLg9lfxG/view?usp=sharing" target="_blank"><u>এখানে ক্লিক করুন</u></a></li>
-                <li>Power Query and BI - <a href="https://drive.google.com/file/d/1SDx4E1WfKEbwo1gz39uuG0cXUyzP0tKB/view?usp=sharing" target="_blank"><u>এখানে ক্লিক করুন</u></a></li>
-            </ul> */}
+                    </label>
+                    <input type={'file'} className='bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ' {...register("img", {
+                        required: {
+                            value: true,
+                            message: 'image is Required'
+                        }
+                    })} />
+                    <label className="label ml-1">
+                        {errors.img?.type === 'required' && <span className="label-text-alt text-red-500">{errors.img.message}</span>}
+                    </label>
+                </div>
+
+
+                <input
+                    style={{ fontFamily: 'Open Sans, sans-serif', letterSpacing: '2px' }} className="hover:bg-white transition w-40 mx-auto text-center bg-orange-500  hover:text-orange-500 rounded-full text-white border-2 border-orange-500 py-2" type={'submit'} value={'submit course'} />
+
+            </form>
+
+
+            {/* <textarea className='h-32 mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' placeholder='Description' {...register("description", {
+                    required: {
+                        value: true,
+                        message: 'Description is Required'
+                    }
+                })} /> */}
+            {/* <label className="label">
+                    {errors.description?.type === 'required' && <span className="label-text-alt text-red-500">{errors.description.message}</span>}
+                </label> */}
+
+
+
+
+
+            {/* <div className='sm:flex  justify-between'>
+                    <div className='sm:w-6/12 w-full'>
+                        <input className='input input-bordered w-ful input-md sm:px-5' placeholder='Price'
+                            type={'number'}
+                            {...register("price", {
+                                required: {
+                                    value: true,
+                                    message: 'Price is Required'
+                                },
+
+                            })} />
+                        <label className="label">
+                            {errors.price?.type === 'required' && <span className="label-text-alt text-red-500">{errors.price.message}</span>}
+
+                        </label>
+                    </div>
+                    <div className='sm:w-6/12 w-full'>
+                        <input className='input input-bordered input-md sm:px-5' placeholder='Available Quantity'
+                            type={'number'}
+                            {...register("availableQuantity", {
+                                required: {
+                                    value: true,
+                                    message: 'Available Quantity is Required'
+                                },
+
+                            })} />
+                        <label className="label">
+                            {errors.availableQuantity?.type === 'required' && <span className="label-text-alt text-red-500">{errors.availableQuantity.message}</span>}
+
+                        </label>
+                    </div>
+                </div> */}
+
+            {/* <input className='input input-bordered input-md' placeholder='Minimum Order Quantity'
+                    type={'number'}
+                    {...register("minimunOrderQuantity", {
+                        required: {
+                            value: true,
+                            message: 'Minimum Order Quantity is Required'
+                        },
+
+                    })} />
+                <label className="label">
+                    {errors.minimunOrderQuantity?.type === 'required' && <span className="label-text-alt text-red-500">{errors.minimunOrderQuantity.message}</span>}
+                </label>
+                <label className="label">
+                    <span className="label-text">Select Image</span>
+
+                </label>
+                <input type={'file'} className='ml-1 ' {...register("img", {
+                    required: {
+                        value: true,
+                        message: 'image is Required'
+                    }
+                })} />
+                <label className="label">
+                    {errors.img?.type === 'required' && <span className="label-text-alt text-red-500">{errors.img.message}</span>}
+                </label>
+
+
+                <textarea className='input h-32 mt-2 input-bordered input-md' placeholder='Description' {...register("description", {
+                    required: {
+                        value: true,
+                        message: 'Description is Required'
+                    }
+                })} />
+                <label className="label">
+                    {errors.description?.type === 'required' && <span className="label-text-alt text-red-500">{errors.description.message}</span>}
+                </label> */}
 
 
 

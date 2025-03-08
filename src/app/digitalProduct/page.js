@@ -2,7 +2,7 @@ import React from 'react'
 
 function DigitalProduct() {
     return (
-        <div>DigitalProduct</div>
+        <div className='mt-32'>DigitalProduct</div>
     )
 }
 

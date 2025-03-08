@@ -19,3 +19,8 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.ganaretedHtml a {
+  color: #007bff;
+  text-decoration: underline;
+}

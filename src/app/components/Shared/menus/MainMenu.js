@@ -1,35 +1,23 @@
-'use client'
-// import React, { useState } from 'react';
+"use client";
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
-import '../Shared/Style/Style.css'
+import '../Style/Style.css'
 import { TiShoppingCart } from "react-icons/ti";
 // import { NavLink, useNavigate } from 'react-router-dom';
 import { usePathname } from 'next/navigation'
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { CiMenuBurger } from "react-icons/ci";
 import { MdDashboardCustomize, MdOutlineClose } from 'react-icons/md';
-import { useState, useEffect } from 'react';
-import HeaderSocial from './SocialHeader';
-import axios from "axios";
-// import { signOut } from 'firebase/auth';
-// import toast from 'react-hot-toast';
-// import { useAuthState } from 'react-firebase-hooks/auth';
-// import auth from '../../firebase.init'
-// import Loader from './Loader';
-// import useRole from '../../Hooks/useRole';
+import axios from 'axios';
+import { Courgette } from 'next/font/google';
 
-const Header = () => {
+function MainMenu() {
     let [toggle, setToggle] = useState(false);
     const [liveCourse, setLiveCourse] = useState(null);
 
-    // let [liveDropdownToggle, setLiveDropdownToggle] = useState(false);
-    // let [recordedDropdownToggle, setRecordedDropdownToggle] = useState(false);
-
-    // Make the GET request
 
     useEffect(() => {
-        axios
-            .get("https://server.mzamanbd.com/liveCourse") // Replace with your API URL
+        axios.get("https://server.mzamanbd.com/liveCourse") // Replace with your API URL
             .then((response) => {
                 setLiveCourse(response.data);
             })
@@ -37,42 +25,17 @@ const Header = () => {
                 console.error("Error fetching data:", error);
             });
     }, []);
-    // console.log(liveCourse);
-
-
-
-    // console.log(liveCourse)
-    // const [user, loading] = useAuthState(auth);
-    // let [role, roleLoading] = useRole(user)
     const pathname = usePathname()
-    // let navigat = useNavigate();
+    console.log(liveCourse);
 
-    // console.log(user);
+
+
     const navBtnHndle = () => {
         setToggle(!toggle)
     }
-    // const handleDropdown = () => {
-    //     const dropdown = document.getElementById('dropdownMenu');
-    //     dropdown.style.display = 'none';
-    // }
-
-    const handleLogout = () => {
-        signOut(auth)
-            .then(() => {
-                navigat('/login')
-                toast.success('Logout Succes!')
-                localStorage.removeItem('accessToken')
-            })
-    }
-
-    // if (loading) {
-    //     return <Loader></Loader>
-    // }
-    // console.log(recordedDropdownToggle);
     if (!liveCourse) return <p>Loading...</p>;
     return (
-        <div className='header-container  fixed top-0 w-full'>
-            <HeaderSocial></HeaderSocial>
+        <div>
             <nav
                 className='flex bg-orange-500 text-white py-3  items-start  md:justify-between md:px-16 px-5 md:items-center'
             >
@@ -108,15 +71,25 @@ const Header = () => {
                         <ul id='dropdownMenu' className={`dropdownMenu absolute top-[24px]  left-0 bg-orange-600 w-64 text-left px-8 py-5
                             `}>
 
-                            <Link className={`link ${pathname === '/liveCourses/msOfficeCourses' ? 'active' : ''}`} href={"/liveCourses/msOfficeCourses"}>MS Office Course</Link>
+                            {
+                                liveCourse.map(course => {
+                                    return (
+                                        <li key={course._id}>
+                                            <Link className={`link ${pathname === `/liveCourses/${course._id}` ? 'active' : ''}`} href={`/liveCourses/${course._id}`}>{course.courseName}</Link>
+                                        </li>
+                                    )
+                                })
+                            }
 
-                            <Link className={`link ${pathname === '/liveCourses/msExcelCourse' ? 'active' : ''}`} href={"/liveCourses/msExcelCourse"}>MS Excel Course</Link>
+                            {/* <Link className={`link ${pathname === '/liveCourses/msOfficeCourses' ? 'active' : ''}`} href={"/liveCourses/msOfficeCourses"}>MS Office Course</Link> */}
+
+                            {/* <Link className={`link ${pathname === '/liveCourses/msExcelCourse' ? 'active' : ''}`} href={"/liveCourses/msExcelCourse"}>MS Excel Course</Link>
 
                             <Link className={`link ${pathname === '/liveCourses/powerQuery' ? 'active' : ''}`} href={"/liveCourses/powerQuery"}>Power BI and Query</Link>
 
                             <Link className={`link ${pathname === '/liveCourses/corporateExcel' ? 'active' : ''}`} href={"/liveCourses/corporateExcel"}>Corporate Excel Training</Link>
 
-                            <Link className={`link ${pathname === '/liveCourses/exclusiveSoloCourse' ? 'active' : ''}`} href={"/liveCourses/exclusiveSoloCourse"}>Exclusive Solo Course</Link>
+                            <Link className={`link ${pathname === '/liveCourses/exclusiveSoloCourse' ? 'active' : ''}`} href={"/liveCourses/exclusiveSoloCourse"}>Exclusive Solo Course</Link> */}
                         </ul>
                     </li>
 
@@ -212,7 +185,7 @@ const Header = () => {
                 </div>
             </nav>
         </div>
-    );
-};
+    )
+}
 
-export default Header;
+export default MainMenu

@@ -1,5 +1,5 @@
 import BannerSection from "./components/HomePage/BannerSection";
-import Header from "./components/Shared/Header";
+import Header from "./components/Shared/menus/Header";
 // import Home from './components';
 
 export default function Home() {
