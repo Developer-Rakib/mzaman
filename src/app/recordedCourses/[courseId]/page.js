@@ -14,7 +14,7 @@ export default function SingleCourse() {
     useEffect(() => {
         async function fetchCourseData() {
             try {
-                const res = await fetch(`https://server.mzamanbd.com/liveCourse/${courseId}`);
+                const res = await fetch(`https://server.mzamanbd.com/recordedCourse/${courseId}`);
                 if (!res.ok) {
                     throw new Error('Failed to fetch course data');
                 }

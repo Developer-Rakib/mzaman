@@ -5,7 +5,7 @@ import '../Style/Style.css'
 import { TiShoppingCart } from "react-icons/ti";
 // import { NavLink, useNavigate } from 'react-router-dom';
 import { usePathname } from 'next/navigation'
-import { RiArrowDropDownLine } from "react-icons/ri";
+import { RiArrowDropDownLine, RiAdminFill } from "react-icons/ri";
 import { CiMenuBurger } from "react-icons/ci";
 import { MdDashboardCustomize, MdOutlineClose } from 'react-icons/md';
 import axios from 'axios';
@@ -182,6 +182,7 @@ function MainMenu() {
                         <TiShoppingCart />
                     </button>
                     <button className='px-2 w-20 py-1.5 ml-3 rounded-md bg-white text-orange-500'>Sign in</button>
+                    <Link href={"/admin"} className='ml-3 text-xl text-white'><RiAdminFill /></Link>
                 </div>
             </nav>
         </div>

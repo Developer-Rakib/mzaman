@@ -84,7 +84,9 @@ export default function AdminPage() {
 
 
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
-    const imgStorage_key = `337d76e7a5799a6aeebe82688b06e092`
+
+
+    const imgStorage_key = `d68a616868fb8cf36774dec992056cdd`
 
     const onSubmit = async data => {
         if (getHTML() === '<p><br></p>') {
@@ -96,45 +98,44 @@ export default function AdminPage() {
             return;
         }
 
+
         const img = data.img[0];
         const formData = new FormData();
         formData.append('image', img);
-        console.log(formData);
-        // const url = `https://api.imgbb.com/1/upload?key=${imgStorage_key}`;
-        // fetch(url, {
-        //     method: 'POST',
-        //     body: formData
-        // })
-        //     .then(res => res.json())
-        //     .then(result => {
-        //         if (result.success) {
-        //             const imgUrl = result.data.url;
-        //             const part = {
-        //                 name: data.name,
-        //                 price: data.price,
-        //                 description: data.description,
-        //                 minimumOrderQuanity: data.minimunOrderQuantity,
-        //                 availableQuanity: data.availableQuantity,
-        //                 img: imgUrl
-        //             }
-        //             console.log(part);
-        //             axios.post(`https://computer-village.onrender.com/part`, part)
-        //                 .then(data => {
-        //                     // console.log(data.data.success);
-        //                     // console.log(data.data);
-        //                     if (data.data.success) {
-        //                         toast.success(`${data.data.message}`)
-        //                         reset()
-        //                     }
-        //                     else {
-        //                         toast.success(`${data.data.message}`)
+        // console.log(formData);
+        const url = `https://api.imgbb.com/1/upload?key=${imgStorage_key}`;
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    const imgUrl = result.data.url;
+                    // console.log(imgUrl);
+                    const course = {
+                        courseName: data.courseName,
+                        courseThumbnail: imgUrl,
+                        courseDetails: getHTML(),
+                        courseReviews: [],
+                    }
+                    axios.post(`https://server.mzamanbd.com/liveCourse`, course)
+                        .then(data => {
+                            // console.log(data.data.success);
+                            console.log(data.data);
+                            if (data.data.success) {
+                                toast.success(`${data.data.message}`)
+                                reset()
+                            }
+                            else {
+                                toast.error(`${data.data.message}`)
 
-        //                     }
+                            }
 
-        //                 })
+                        })
 
-        //         }
-        //     })
+                }
+            })
 
     }
 
