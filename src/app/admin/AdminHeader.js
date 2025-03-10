@@ -2,7 +2,7 @@ import React from 'react'
 
 function AdminHeader() {
     return (
-        <div className='mt-36'>this is adminMenu</div>
+        <div className='mt-6'>this is adminMenu</div>
     )
 }
 

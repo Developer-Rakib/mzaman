@@ -31,6 +31,7 @@ export default function SingleCourse() {
             fetchCourseData();
         }
     }, [courseId]);  // Re-fetch when courseId changes
+    // console.log(course);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;

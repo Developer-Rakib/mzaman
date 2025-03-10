@@ -14,7 +14,7 @@ export default function AdminLayout({ children }) {
             >
                 <h2 className="text-2xl font-bold text-center">Admin Panel</h2>
                 <nav>
-                    <Link href="/admin" className="block py-2.5 px-4 rounded-lg hover:bg-gray-700">
+                    <Link href="#" className="block py-2.5 px-4 rounded-lg hover:bg-gray-700">
                         🏠 Dashboard
                     </Link>
                     <Link href="/admin/CreateCourse" className="block py-2.5 px-4 rounded-lg hover:bg-gray-700">

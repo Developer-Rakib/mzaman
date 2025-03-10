@@ -14,9 +14,11 @@ import { Courgette } from 'next/font/google';
 function MainMenu() {
     let [toggle, setToggle] = useState(false);
     const [liveCourse, setLiveCourse] = useState(null);
+    const [recordedCourse, setRecordedCourse] = useState(null);
 
 
     useEffect(() => {
+
         axios.get("https://server.mzamanbd.com/liveCourse") // Replace with your API URL
             .then((response) => {
                 setLiveCourse(response.data);
@@ -24,16 +26,24 @@ function MainMenu() {
             .catch((error) => {
                 console.error("Error fetching data:", error);
             });
+
+        axios.get("https://server.mzamanbd.com/recordedCourse") // Replace with your API URL
+            .then((response) => {
+                setRecordedCourse(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
     }, []);
     const pathname = usePathname()
-    console.log(liveCourse);
+    // console.log(liveCourse);
 
 
 
     const navBtnHndle = () => {
         setToggle(!toggle)
     }
-    if (!liveCourse) return <p>Loading...</p>;
+    if (!liveCourse || !recordedCourse) return <p>Loading...</p>;
     return (
         <div>
             <nav
@@ -83,21 +93,9 @@ function MainMenu() {
 
                             {/* <Link className={`link ${pathname === '/liveCourses/msOfficeCourses' ? 'active' : ''}`} href={"/liveCourses/msOfficeCourses"}>MS Office Course</Link> */}
 
-                            {/* <Link className={`link ${pathname === '/liveCourses/msExcelCourse' ? 'active' : ''}`} href={"/liveCourses/msExcelCourse"}>MS Excel Course</Link>
-
-                            <Link className={`link ${pathname === '/liveCourses/powerQuery' ? 'active' : ''}`} href={"/liveCourses/powerQuery"}>Power BI and Query</Link>
-
-                            <Link className={`link ${pathname === '/liveCourses/corporateExcel' ? 'active' : ''}`} href={"/liveCourses/corporateExcel"}>Corporate Excel Training</Link>
-
-                            <Link className={`link ${pathname === '/liveCourses/exclusiveSoloCourse' ? 'active' : ''}`} href={"/liveCourses/exclusiveSoloCourse"}>Exclusive Solo Course</Link> */}
                         </ul>
                     </li>
 
-                    {/* MS Office Course
-                    MS Excel Course
-                    Excel for Adv. Users
-                    PowerPoint Course
-                    MS Word Course */}
 
                     {/* Recorded Course */}
 
@@ -113,13 +111,22 @@ function MainMenu() {
                         <RiArrowDropDownLine className='text-2xl' />
 
                         <ul className={`dropdownMenu absolute top-[24px]  left-0 bg-orange-600 w-64 text-left px-8 py-5 `}>
-                            <Link className={`link ${pathname === '/recordedCourses/msOfficeCourse' ? 'active' : ''}`} href={"/recordedCourses/msOfficeCourse"}>MS Office Course</Link>
-                            <Link className={`link ${pathname === '/recordedCourses/msExcelCourse' ? 'active' : ''}`} href={"/recordedCourses/msExcelCourse"}>MS Excel Course</Link>
-                            <Link className={`link ${pathname === '/recordedCourses/excelAdvance' ? 'active' : ''}`} href={"/recordedCourses/excelAdvance"}>Excel for Adv. Users</Link>
-                            <Link className={`link ${pathname === '/recordedCourses/powerPoint' ? 'active' : ''}`} href={"/recordedCourses/powerPoint"}>PowerPoint Course</Link>
-                            <Link className={`link ${pathname === '/recordedCourses/msWord' ? 'active' : ''}`} href={"/recordedCourses/msWord"}>MS Word Course</Link>
+                            {
+                                recordedCourse.map(course => {
+                                    return (
+                                        <li key={course._id}>
+                                            <Link className={`link ${pathname === `/recordedCourses/${course._id}` ? 'active' : ''}`} href={`/recordedCourses/${course._id}`}>{course.courseName}</Link>
+                                        </li>
+                                    )
+                                })
+                            }
+
+
+                            {/* <Link className={`link ${pathname === '/recordedCourses/msWord' ? 'active' : ''}`} href={"/recordedCourses/msWord"}>MS Word Course</Link> */}
                         </ul>
                     </li>
+
+
                     <li className="">
                         <Link className={`link ${pathname === '/digitalProduct' ? 'active' : ''}`} href={"/digitalProduct"}>Digital Product</Link>
                     </li>

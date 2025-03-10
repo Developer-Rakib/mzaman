@@ -1,4 +1,5 @@
-// 'use client'
+'use client'
+import { usePathname } from 'next/navigation';
 // import React, { useState } from 'react';
 import '../Style/Style.css'
 import MainMenu from './MainMenu';
@@ -12,7 +13,8 @@ import HeaderSocial from './SocialHeader';
 // import useRole from '../../Hooks/useRole';
 
 const Header = () => {
-
+    const pathname = usePathname()
+    const hideHeaderRoutes = ["/admin"];
 
     // let [liveDropdownToggle, setLiveDropdownToggle] = useState(false);
     // let [recordedDropdownToggle, setRecordedDropdownToggle] = useState(false);
@@ -49,13 +51,19 @@ const Header = () => {
     // if (loading) {
     //     return <Loader></Loader>
     // }
-    // console.log(recordedDropdownToggle);
+    // console.log("/admin/CreateCourse");
+    // console.log(pathname.includes(hideHeaderRoutes));
 
     return (
-        <div className='header-container  fixed top-0 w-full'>
-            <HeaderSocial></HeaderSocial>
-            <MainMenu></MainMenu>
-        </div>
+        <>
+            {!pathname.includes(hideHeaderRoutes) &&
+                <div className='header-container  fixed top-0 w-full'>
+                    <HeaderSocial></HeaderSocial>
+                    <MainMenu></MainMenu>
+                </div>
+            }
+        </>
+
     );
 };
 
