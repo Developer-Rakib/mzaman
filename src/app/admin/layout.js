@@ -14,10 +14,66 @@ export default function AdminLayout({ children }) {
             >
                 <h2 className="text-2xl font-bold text-center">Admin Panel</h2>
                 <nav>
-                    <Link href="/admin" className="block py-2.5 px-4 rounded-lg hover:bg-gray-700">
-                        🏠 Dashboard
+                    <Link href="/" className="block py-2.5 px-4 rounded-lg hover:bg-gray-700">
+                        🏠 Home
                     </Link>
-                    <Link href="/admin/CreateCourse" className="block py-2.5 px-4 rounded-lg hover:bg-gray-700">
+                    <Link href="/admin" className="flex py-2.5 px-4 rounded-lg hover:bg-gray-700">
+                        <svg
+                            width=""
+                            height="24"
+                            viewBox="0 0 30 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <rect x="3" y="3" width="8" height="8" rx="2" fill="#a33f05" />
+                            <rect x="13" y="3" width="8" height="5" rx="2" fill="#b8b8b8" />
+                            <rect x="13" y="10" width="8" height="10" rx="2" fill="#a33f05" />
+                            <rect x="3" y="13" width="8" height="7" rx="2" fill="#b8b8b8" />
+                        </svg>
+
+                        Dashboard
+                    </Link>
+                    <Link href="/admin/CreateCourse" className="flex py-2.5 px-4 rounded-lg hover:bg-gray-700">
+                        <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 30 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M4 19H20V5C20 4.44772 19.5523 4 19 4H5C4.44772 4 4 4.44772 4 5V19Z"
+                                stroke="#0091ab"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M8 9H16"
+                                stroke="#0091ab"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                            />
+                            <path
+                                d="M8 13H12"
+                                stroke="#0091ab"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                            />
+                            <path
+                                d="M15 20H21"
+                                stroke="#0091ab"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                            />
+                            <path
+                                d="M18 17V23"
+                                stroke="#0091ab"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+
                         Create Course
                     </Link>
                     <Link href="#" className="block py-2.5 px-4 rounded-lg hover:bg-gray-700">
@@ -47,7 +103,7 @@ export default function AdminLayout({ children }) {
 
                 {/* Page Content */}
                 <h1 className="text-3xl font-bold text-gray-800">Welcome to the Admin Panel</h1>
-                <p className="mt-2 text-gray-600">Manage your dashboard with ease.</p>
+                <p className="mt-2 text-gray-600">Manage your dashboard.</p>
                 {children}
             </div>
         </div>
