@@ -26,6 +26,7 @@ export default function Inventory() {
     return (
         <div className="p-6 mt-32">
             this is sales
+
         </div>
     );
 }
