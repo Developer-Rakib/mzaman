@@ -1,5 +1,5 @@
  <nav
-                className='flex bg-orange-500 text-white py-4  items-start  md:justify-between md:px-16 px-5 md:items-center'
+                className='flex bg-[#426B69] text-white py-4  items-start  md:justify-between md:px-16 px-5 md:items-center'
             >
                 {/* {
                     user &&
@@ -88,6 +88,6 @@
                     <button className='text-2xl'>
                         <TiShoppingCart />
                     </button>
-                    <button className='px-2 w-20 py-1.5 ml-3 rounded-md bg-white text-orange-500'>Sign in</button>
+                    <button className='px-2 w-20 py-1.5 ml-3 rounded-md bg-white text-[#426B69]'>Sign in</button>
                 </div>
             </nav>

@@ -17,24 +17,24 @@ function MainMenu() {
     const [recordedCourse, setRecordedCourse] = useState(null);
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        axios.get("https://server.mzamanbd.com/liveCourse") // Replace with your API URL
-            .then((response) => {
-                setLiveCourse(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
+    //     axios.get("https://server.mzamanbd.com/liveCourse") // Replace with your API URL
+    //         .then((response) => {
+    //             setLiveCourse(response.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error fetching data:", error);
+    //         });
 
-        axios.get("https://server.mzamanbd.com/recordedCourse") // Replace with your API URL
-            .then((response) => {
-                setRecordedCourse(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
-    }, []);
+    //     axios.get("https://server.mzamanbd.com/recordedCourse") // Replace with your API URL
+    //         .then((response) => {
+    //             setRecordedCourse(response.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error fetching data:", error);
+    //         });
+    // }, []);
     const pathname = usePathname()
     // console.log(liveCourse);
 
@@ -43,11 +43,11 @@ function MainMenu() {
     const navBtnHndle = () => {
         setToggle(!toggle)
     }
-    if (!liveCourse || !recordedCourse) return <p>Loading...</p>;
+    // if (!liveCourse || !recordedCourse) return <p>Loading...</p>;
     return (
         <div>
             <nav
-                className='flex bg-orange-500 text-white py-3  items-start  md:justify-between md:px-16 px-5 md:items-center'
+                className='flex bg-[#426B69] text-white py-3  items-start  md:justify-between md:px-16 px-5 md:items-center'
             >
                 {/* {
                     user &&
@@ -56,7 +56,7 @@ function MainMenu() {
                     </label>
                 } */}
                 {/* <img className='sm:w-52 w-48' src={logo} alt="" /> */}
-                <h2 className=' text-2xl  tracking-wide headerLogo'>Mzaman</h2>
+                <h2 className=' text-2xl w-[202px]  tracking-wide headerLogo'>Al-Baraka Fish</h2>
 
                 <span onClick={navBtnHndle} className='md:hidden cursor-pointer absolute right-6 text-xl top-[20px]'>{toggle ? <MdOutlineClose /> : <CiMenuBurger />}</span>
                 {/* <MdOutlineClose></MdOutlineClose>
@@ -69,66 +69,14 @@ function MainMenu() {
 
                     {/* live courses */}
 
-                    <li className="dropdownMenuParent cursor-pointer relative flex items-center">
-                        <Link
-                            // onClick={() => {
-                            //     setLiveDropdownToggle(!liveDropdownToggle)
-                            //     setRecordedDropdownToggle(false)
-                            // }}
-                            className={`link ${pathname === '/liveCourses' ? 'active' : ''}`} href={"/"}>Live Courses</Link>
-                        {/* ${!liveDropdownToggle && 'hidden'} */}
-                        <RiArrowDropDownLine className='text-2xl' />
-                        <ul id='dropdownMenu' className={`dropdownMenu absolute top-[24px]  left-0 bg-orange-600 w-64 text-left px-8 py-5
-                            `}>
 
-                            {
-                                liveCourse.map(course => {
-                                    return (
-                                        <li key={course._id}>
-                                            <Link className={`link ${pathname === `/liveCourses/${course._id}` ? 'active' : ''}`} href={`/liveCourses/${course._id}`}>{course.courseName}</Link>
-                                        </li>
-                                    )
-                                })
-                            }
-
-                            {/* <Link className={`link ${pathname === '/liveCourses/msOfficeCourses' ? 'active' : ''}`} href={"/liveCourses/msOfficeCourses"}>MS Office Course</Link> */}
-
-                        </ul>
-                    </li>
-
-
-                    {/* Recorded Course */}
-
-                    <li className="relative cursor-pointer flex items-center dropdownMenuParent">
-                        <Link
-                            // onClick={() => {
-                            //     setRecordedDropdownToggle(!recordedDropdownToggle)
-                            //     setLiveDropdownToggle(false)
-                            // }}
-                            className={` link ${pathname === '/recordedCourses' ? 'active' : ''}`} href={"/"}>Recorded Course</Link>
-
-                        {/* ${!recordedDropdownToggle && 'hidden'} */}
-                        <RiArrowDropDownLine className='text-2xl' />
-
-                        <ul className={`dropdownMenu absolute top-[24px]  left-0 bg-orange-600 w-64 text-left px-8 py-5 `}>
-                            {
-                                recordedCourse.map(course => {
-                                    return (
-                                        <li key={course._id}>
-                                            <Link className={`link ${pathname === `/recordedCourses/${course._id}` ? 'active' : ''}`} href={`/recordedCourses/${course._id}`}>{course.courseName}</Link>
-                                        </li>
-                                    )
-                                })
-                            }
-
-
-                            {/* <Link className={`link ${pathname === '/recordedCourses/msWord' ? 'active' : ''}`} href={"/recordedCourses/msWord"}>MS Word Course</Link> */}
-                        </ul>
-                    </li>
 
 
                     <li className="">
-                        <Link className={`link ${pathname === '/digitalProduct' ? 'active' : ''}`} href={"/digitalProduct"}>Digital Product</Link>
+                        <Link className={`link ${pathname === '/insertSale' ? 'active' : ''}`} href={"/insertSale"}>Insert Sales</Link>
+                    </li>
+                    <li className="">
+                        <Link className={`link ${pathname === '/stockFish' ? 'active' : ''}`} href={"/stockFish"}>Fish Stock</Link>
                     </li>
                     <li className="">
                         <Link className={`link ${pathname === '/contact' ? 'active' : ''}`} href={"/contact"}>Contact</Link>
@@ -188,7 +136,7 @@ function MainMenu() {
                     <button className='text-2xl'>
                         <TiShoppingCart />
                     </button>
-                    <button className='px-2 w-20 py-1.5 ml-3 rounded-md bg-white text-orange-500'>Sign in</button>
+                    <button className='px-2 w-20 py-1.5 ml-3 rounded-md bg-white text-[#426B69]'>Sign in</button>
                     <Link href={"/admin"} className='ml-3 text-xl text-white'><RiAdminFill /></Link>
                 </div>
             </nav>

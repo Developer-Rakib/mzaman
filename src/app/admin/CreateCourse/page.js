@@ -143,7 +143,7 @@ export default function CreateCourse() {
     return (
         <div className="shadow-lg p-8 border rounded-lg w-11/12 mx-auto">
             <div className="border p-4 rounded-lg mx-aut ">
-                <h2 className="text-lg font-semibold mb-2 text-orange-500">Description Editor</h2>
+                <h2 className="text-lg font-semibold mb-2 text-[#426B69]">Description Editor</h2>
 
                 {/* Formatting Buttons */}
                 <div className="mb-2 space-x-2">
@@ -220,7 +220,7 @@ export default function CreateCourse() {
 
 
                 <input
-                    style={{ fontFamily: 'Open Sans, sans-serif', letterSpacing: '2px' }} className="hover:bg-white transition w-40 mx-auto text-center bg-orange-500  hover:text-orange-500 rounded-full text-white border-2 border-orange-500 py-2" type={'submit'} value={'submit course'} />
+                    style={{ fontFamily: 'Open Sans, sans-serif', letterSpacing: '2px' }} className="hover:bg-white transition w-40 mx-auto text-center bg-[#426B69]  hover:text-[#426B69] rounded-full text-white border-2 border-[#426B69]-500 py-2" type={'submit'} value={'submit course'} />
 
             </form>
 

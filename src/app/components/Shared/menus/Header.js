@@ -58,7 +58,7 @@ const Header = () => {
         <>
             {!pathname.includes(hideHeaderRoutes) &&
                 <div className='header-container  fixed top-0 w-full'>
-                    <HeaderSocial></HeaderSocial>
+                    {/* <HeaderSocial></HeaderSocial> */}
                     <MainMenu></MainMenu>
                 </div>
             }
